@@ -132,6 +132,11 @@ if (form) form.addEventListener("submit", e => {
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // Urendeclaratie (bewaard in deze browser)
+// E-mailontvangers voor de urendeclaratie
+const MAIL_PRIMARY = "riolering@tutamail.com";
+const MAIL_CC = "n.vanderhoek2@student.avans.nl";
+
+// Urendeclaratie (bewaard in deze browser)
 const HOURS_KEY = "riolering-uren";
 const hoursForm = document.getElementById("hours-form");
 const hoursStatus = document.getElementById("hours-status");
@@ -188,7 +193,11 @@ document.getElementById("hours-send")?.addEventListener("click", () => {
   const lines = hours.map(r => r.datum + " | " + r.naam + " | " + r.soort + " | " + r.uren + " uur");
   btn.disabled = true;
   hoursStatus.textContent = "Bezig met versturen...";
-  sendMail("Urendeclaratie", { declaraties: lines.join("\n"), totaal: total + " uur" })
+
+  sendMail("Urendeclaratie", {
+    declaraties: lines.join("\n"),
+    totaal: total + " uur"
+  })
     .then(() => {
       hoursStatus.textContent = "Declaraties verstuurd.";
       hours = []; saveHours(); renderHours();
@@ -211,3 +220,14 @@ document.getElementById("hours-csv")?.addEventListener("click", () => {
 });
 
 if (hoursForm) renderHours();
+
+// Direct versturen via FormSubmit AJAX
+async function sendMail(subject, data) {
+  const res = await fetch("https://formsubmit.co/ajax/" + MAIL_PRIMARY, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(Object.assign({ _subject: subject, _cc: MAIL_CC, _template: "table" }, data))
+  });
+  const json = await res.json();
+  if (!res.ok || json.success === false || json.success === "false") throw new Error("send failed");
+}
