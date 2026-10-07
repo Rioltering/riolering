@@ -131,156 +131,83 @@ if (form) form.addEventListener("submit", e => {
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
- // Urendeclaratie (bewaard in deze browser)
-
+// Urendeclaratie (bewaard in deze browser)
 const HOURS_KEY = "riolering-uren";
-
 const hoursForm = document.getElementById("hours-form");
-
 const hoursStatus = document.getElementById("hours-status");
-
 const hoursBody = document.querySelector("#hours-table tbody");
-
 let hours = [];
-
 try { hours = JSON.parse(localStorage.getItem(HOURS_KEY)) || []; } catch (e) { hours = []; }
 
-
 function saveHours() {
-
   try { localStorage.setItem(HOURS_KEY, JSON.stringify(hours)); } catch (e) {}
-
 }
-
 
 function renderHours() {
-
   hoursBody.innerHTML = "";
-
   hours.forEach((r, i) => {
-
     const tr = document.createElement("tr");
-
     [r.datum, r.naam, r.soort, String(r.uren)].forEach(v => {
-
       const td = document.createElement("td");
-
       td.textContent = v;
-
       tr.appendChild(td);
-
     });
-
     const td = document.createElement("td");
-
     const b = document.createElement("button");
-
     b.className = "del"; b.type = "button"; b.textContent = "Verwijder";
-
     b.addEventListener("click", () => { hours.splice(i, 1); saveHours(); renderHours(); });
-
     td.appendChild(b); tr.appendChild(td);
-
     hoursBody.appendChild(tr);
-
   });
-
   const total = hours.reduce((s, r) => s + r.uren, 0);
-
   document.getElementById("hours-total").textContent = total.toFixed(2).replace(/\.?0+$/, "");
-
   document.getElementById("hours-empty").hidden = hours.length > 0;
-
 }
 
-
 if (hoursForm) hoursForm.addEventListener("submit", e => {
-
   e.preventDefault();
-
   let ok = true;
-
   hoursForm.querySelectorAll("[required]").forEach(f => {
-
     const valid = f.value !== "" && f.checkValidity();
-
     f.classList.toggle("invalid", !valid);
-
     if (!valid) ok = false;
-
   });
-
   if (!ok) { hoursStatus.textContent = "Kies een naam, datum en een aantal uren tussen 0,25 en 1100."; return; }
-
   const d = new FormData(hoursForm);
-
   const soort = d.get("toelichting").trim() ? d.get("soort") + " (" + d.get("toelichting").trim() + ")" : d.get("soort");
-
   hours.push({ naam: d.get("naam"), datum: d.get("datum"), uren: parseFloat(d.get("uren")), soort });
-
   saveHours(); renderHours();
-
   hoursForm.reset();
-
   hoursStatus.textContent = "Declaratie toegevoegd.";
-
 });
-
 
 document.getElementById("hours-send")?.addEventListener("click", () => {
-
   if (!hours.length) { hoursStatus.textContent = "Voeg eerst uren toe."; return; }
-
   const btn = document.getElementById("hours-send");
-
   const total = hours.reduce((s, r) => s + r.uren, 0);
-
   const lines = hours.map(r => r.datum + " | " + r.naam + " | " + r.soort + " | " + r.uren + " uur");
-
   btn.disabled = true;
-
   hoursStatus.textContent = "Bezig met versturen...";
-
   sendMail("Urendeclaratie", { declaraties: lines.join("\n"), totaal: total + " uur" })
-
     .then(() => {
-
       hoursStatus.textContent = "Declaraties verstuurd.";
-
       hours = []; saveHours(); renderHours();
-
     })
-
     .catch(() => {
-
       hoursStatus.textContent = "Versturen is niet gelukt. Je uren zijn bewaard; download ze als CSV of probeer het later opnieuw.";
-
     })
-
     .finally(() => { btn.disabled = false; });
-
 });
-
 
 document.getElementById("hours-csv")?.addEventListener("click", () => {
-
   if (!hours.length) { hoursStatus.textContent = "Voeg eerst uren toe."; return; }
-
   const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
-
   const csv = ["datum,naam,werkzaamheden,uren"].concat(hours.map(r => [r.datum, r.naam, r.soort, r.uren].map(esc).join(","))).join("\n");
-
   const a = document.createElement("a");
-
   a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-
   a.download = "urendeclaratie.csv";
-
   a.click();
-
   URL.revokeObjectURL(a.href);
-
 });
 
-
-if (hoursForm) renderHours(); 
+if (hoursForm) renderHours();
