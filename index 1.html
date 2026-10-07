@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Riolering.mooo.com – Rioleringsinstallaties ontworpen in Revit</title>
+  <meta name="description" content="Ontwerp van rioleringsinstallaties voor hoogbouw en laagbouw, volledig uitgewerkt in Revit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#top">Riolering<span>.mooo.com</span></a>
+    <button class="nav-toggle" aria-label="Menu openen" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav id="nav" class="nav">
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#diensten">Diensten</a>
+      <a href="#team">Team</a>
+      <a href="historie.html">Bedrijfshistorie</a>
+      <a href="#uren">Urendeclaratie</a>
+      <a href="#contact" class="nav-cta">Offerte aanvragen</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Riolering die klopt voordat de eerste buis gelegd is.</h1>
+        <p class="lead">Wij ontwerpen rioleringsinstallaties voor hoogbouw en laagbouw in Revit. Leidingen, afschot en doorvoeren worden in 3D afgestemd met de rest van het gebouw.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#contact">Offerte aanvragen</a>
+          <a class="btn btn-ghost" href="#diensten">Bekijk diensten</a>
+        </div>
+      </div>
+
+      <div class="schematic" aria-label="Schema van een rioleringsstam in een gebouw">
+        <div class="switch" role="tablist">
+          <button role="tab" class="is-active" data-type="laag" aria-selected="true">Laagbouw</button>
+          <button role="tab" data-type="hoog" aria-selected="false">Hoogbouw</button>
+        </div>
+        <svg id="diagram" viewBox="0 0 400 420" role="img" aria-label="Doorsnede van een gebouw met afvoerleiding"></svg>
+        <p id="diagram-caption" class="caption"></p>
+      </div>
+    </section>
+
+    <section id="werkwijze" class="section">
+      <h2>Van Revit-model naar uitvoerbare tekening</h2>
+      <ol class="steps">
+        <li><h3>Intake</h3><p>We nemen het architectonisch model en de eisen van de installateur door.</p></li>
+        <li><h3>Modelleren</h3><p>De volledige riolering gaat in Revit: stammen, liggende leidingen, ontluchting en doorvoeren.</p></li>
+        <li><h3>Afstemmen</h3><p>Clash-controle met constructie, water- en luchtinstallaties voordat er gebouwd wordt.</p></li>
+        <li><h3>Opleveren</h3><p>Tekeningen, materiaallijsten en het Revit-model, klaar voor de bouwplaats.</p></li>
+      </ol>
+    </section>
+
+    <section id="diensten" class="section section-tint">
+      <h2>Diensten</h2>
+      <div class="services">
+        <article>
+          <h3>Laagbouw</h3>
+          <p>Woningen, kleinere kantoren en schoolgebouwen. Grondleidingen, hemelwaterafvoer en aansluiting op het openbaar riool.</p>
+        </article>
+        <article>
+          <h3>Hoogbouw</h3>
+          <p>Appartementen- en kantoortorens. Afvoerstammen over meerdere verdiepingen, geluidsisolatie, brandwerende doorvoeren en ontluchting.</p>
+        </article>
+        <article>
+          <h3>Revit-coördinatie</h3>
+          <p>Wij leveren een model dat past in het BIM-proces van het hele project, met heldere naamgeving en parameters.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="team" class="section">
+      <h2>Team</h2>
+      <ul class="team">
+        <li><span class="avatar" aria-hidden="true">NC</span><div><strong>Nick Corner</strong><span class="role">Trotse eigenaar</span></div></li>
+        <li><span class="avatar" aria-hidden="true">NR</span><div><strong>Nyijk Redburg</strong><span class="role">Tekenaar</span></div></li>
+        <li><span class="avatar" aria-hidden="true">HD</span><div><strong>Hendrick Dryer</strong><span class="role">Stagiair</span></div></li>
+        <li><span class="avatar" aria-hidden="true">BW</span><div><strong>Bachmed Week</strong><span class="role">Senior Ontkalker &amp; Veld-Rioolmonteur</span><p class="quote">&ldquo;Gespecialiseerd in hoogbouw, laagbouw en het verwerken van Westnijl-trauma's.&rdquo;</p></div></li>
+      </ul>
+    </section>
+
+    <section id="uren" class="section section-tint">
+      <h2>Urendeclaratie</h2>
+      <p>Registreer hier je uren, ook die voor het doornemen van de site. Je declaraties worden bewaard in deze browser en je verstuurt ze met één klik.</p>
+      <div class="hours-grid">
+        <form id="hours-form" novalidate>
+          <label>Naam
+            <select name="naam" required>
+              <option value="">Kies je naam</option>
+              <option>Nick Corner</option>
+              <option>Nyijk Redburg</option>
+              <option>Hendrick Dryer</option>
+              <option>Bachmed Week</option>
+            </select>
+          </label>
+          <label>Datum <input type="date" name="datum" required></label>
+          <label>Aantal uren <input type="number" name="uren" min="0.25" max="1100" step="0.25" required></label>
+          <label>Werkzaamheden
+            <select name="soort">
+              <option>Website doornemen</option>
+              <option>Modelleren in Revit</option>
+              <option>Overleg</option>
+              <option>Veldwerk</option>
+              <option>Overig</option>
+            </select>
+          </label>
+          <label>Toelichting <input type="text" name="toelichting" maxlength="120"></label>
+          <button class="btn" type="submit">Declaratie toevoegen</button>
+          <p id="hours-status" role="status"></p>
+        </form>
+        <div>
+          <div class="table-wrap">
+            <table id="hours-table">
+              <thead><tr><th>Datum</th><th>Naam</th><th>Werkzaamheden</th><th>Uren</th><th><span class="sr-only">Verwijderen</span></th></tr></thead>
+              <tbody></tbody>
+              <tfoot><tr><th colspan="3">Totaal</th><td id="hours-total">0</td><td></td></tr></tfoot>
+            </table>
+          </div>
+          <p id="hours-empty">Nog geen uren geregistreerd.</p>
+          <div class="hero-actions">
+            <button class="btn" id="hours-send" type="button">Verstuur declaraties</button>
+            <button class="btn btn-ghost" id="hours-csv" type="button">Download als CSV</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-dark">
+      <div class="contact-grid">
+        <div>
+          <h2>Vertel ons over je project</h2>
+          <p>Geef kort aan wat je bouwt. We reageren met een voorstel.</p>
+          <p>Mailen kan ook direct naar <a href="mailto:riolering@tutamail.com">riolering@tutamail.com</a> en <a href="mailto:n.vanderhoek2@student.avans.nl">n.vanderhoek2@student.avans.nl</a>.</p>
+        </div>
+        <form id="contact-form" novalidate>
+          <label>Naam <input type="text" name="naam" required autocomplete="name"></label>
+          <label>E-mailadres <input type="email" name="email" required autocomplete="email"></label>
+          <label>Type project
+            <select name="type">
+              <option>Laagbouw</option>
+              <option>Hoogbouw</option>
+              <option>Beide / weet ik nog niet</option>
+            </select>
+          </label>
+          <label>Bericht <textarea name="bericht" rows="4" required></textarea></label>
+          <button class="btn" type="submit">Verstuur aanvraag</button>
+          <p id="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Riolering.mooo.com</p>
+  </footer>
+</body>
+</html>
